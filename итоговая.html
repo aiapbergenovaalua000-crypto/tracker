@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Эффективное распределение времени</title>
+
+<style>
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+body{
+  font-family:Arial, sans-serif;
+  background:linear-gradient(#EBF4FF,#FFFFFF);
+  color:#455A64;
+  padding:20px;
+}
+
+.container{
+  max-width:1000px;
+  margin:auto;
+}
+
+section{
+  background:rgba(255,255,255,0.7);
+  backdrop-filter:blur(10px);
+  padding:20px;
+  margin-top:25px;
+  border-radius:20px;
+  box-shadow:0 4px 10px rgba(0,0,0,0.1);
+}
+
+h1,h2{
+  color:#1E88E5;
+  margin-bottom:15px;
+}
+
+p{
+  line-height:1.6;
+}
+
+input,
+select,
+textarea,
+button{
+  width:100%;
+  padding:12px;
+  margin-top:10px;
+  border-radius:10px;
+  border:1px solid #ccc;
+  font-size:16px;
+}
+
+button{
+  background:white;
+  color:#1E88E5;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+button:hover{
+  background:#1E88E5;
+  color:white;
+}
+
+ul{
+  list-style:none;
+  margin-top:15px;
+}
+
+li{
+  background:white;
+  padding:10px;
+  margin-top:10px;
+  border-radius:10px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+}
+
+.done{
+  text-decoration:line-through;
+  color:gray;
+}
+
+.progress{
+  width:100%;
+  height:30px;
+  background:#ddd;
+  border-radius:20px;
+  overflow:hidden;
+  margin-top:20px;
+}
+
+.progress-bar{
+  height:100%;
+  width:0%;
+  background:#1E88E5;
+  color:white;
+  text-align:center;
+  line-height:30px;
+}
+
+.card{
+  background:white;
+  padding:15px;
+  border-radius:10px;
+  margin-top:15px;
+}
+
+#timer{
+  font-size:50px;
+  text-align:center;
+  margin:20px 0;
+}
+
+.socials a{
+  text-decoration:none;
+  margin-right:15px;
+  color:#1E88E5;
+}
+
+.fade{
+  animation:fadeIn 1s ease;
+}
+
+@keyframes fadeIn{
+  from{
+    opacity:0;
+    transform:translateY(20px);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}
+
+</style>
+
+</head>
+<body>
+
+<div class="container">
+
+<section class="fade">
+
+<h1>Эффективное распределение времени</h1>
+
+<p id="time"></p>
+
+<p>
+Это мини-приложение помогает:
+</p>
+
+<ul>
+<li>Планировать задачи</li>
+<li>Следить за продуктивностью</li>
+<li>Использовать Pomodoro</li>
+<li>Управлять временем</li>
+</ul>
+
+</section>
+
+<section class="fade">
+
+<h2>Основы тайм-менеджмента</h2>
+
+<div class="card">
+<h3>Pomodoro</h3>
+<p>25 минут работы и 5 минут отдыха.</p>
+</div>
+
+<div class="card">
+<h3>Правило 80/20</h3>
+<p>20% действий дают 80% результата.</p>
+</div>
+
+<div class="card">
+<h3>GTD</h3>
+<p>Записывайте задачи и разгружайте память.</p>
+</div>
+
+</section>
+
+<section class="fade">
+
+<h2>Планировщик задач</h2>
+
+<input type="text" id="taskInput" placeholder="Введите задачу">
+
+<select id="category">
+<option>Учеба</option>
+<option>Работа</option>
+<option>Спорт</option>
+<option>Отдых</option>
+</select>
+
+<select id="priority">
+<option>Низкий</option>
+<option>Средний</option>
+<option>Высокий</option>
+</select>
+
+<button onclick="addTask()">Добавить задачу</button>
+
+<ul id="taskList"></ul>
+
+</section>
+
+<section class="fade">
+
+<h2>Калькулятор продуктивности</h2>
+
+<input type="number" id="work" placeholder="Часы работы">
+
+<input type="number" id="study" placeholder="Часы учебы">
+
+<input type="number" id="fun" placeholder="Часы развлечений">
+
+<button onclick="calculateProductivity()">
+Рассчитать продуктивность
+</button>
+
+<h3 id="result"></h3>
+
+<div class="progress">
+<div class="progress-bar" id="progressBar">
+0%
+</div>
+</div>
+
+</section>
+
+<section class="fade">
+
+<h2>Pomodoro Timer</h2>
+
+<div id="timer">25:00</div>
+
+<button onclick="startTimer()">Старт</button>
+
+<button onclick="pauseTimer()">Пауза</button>
+
+<button onclick="resetTimer()">Сброс</button>
+
+</section>
+
+<section class="fade">
+
+<h2>Полезная цитата</h2>
+
+<div id="quotes"></div>
+
+</section>
+
+<section class="fade">
+
+<h2>Контакты</h2>
+
+<form id="contactForm">
+
+<input type="text" id="name" placeholder="Ваше имя">
+
+<input type="email" id="email" placeholder="Ваш email">
+
+<textarea id="message" placeholder="Сообщение"></textarea>
+
+<button type="submit">Отправить</button>
+
+</form>
+
+<p id="status"></p>
+
+<div class="socials">
+<a href="@Allu10aa">Telegram</a>
+<a href="https://www.instagram.com/allu10aa?igsh=MXJuaGhwY2RydGNwbA==">Instagram</a>
+<a href="https://github.com/aiapbergenovaalua000-crypto">GitHub</a>
+</div>
+
+</section>
+
+</div>
+
+<script>
+
+// ВРЕМЯ
+
+function updateTime(){
+
+  const now = new Date();
+
+  document.getElementById("time").innerHTML =
+  "Текущая дата и время: " + now.toLocaleString();
+
+}
+
+setInterval(updateTime,1000);
+
+updateTime();
+
+
+
+// ПЛАНИРОВЩИК
+
+let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+
+function saveTasks(){
+
+  localStorage.setItem("tasks",JSON.stringify(tasks));
+
+}
+
+function renderTasks(){
+
+  const taskList = document.getElementById("taskList");
+
+  taskList.innerHTML = "";
+
+  tasks.forEach((task,index)=>{
+
+    const li = document.createElement("li");
+
+    li.innerHTML = `
+    
+    <span class="${task.done ? 'done' : ''}">
+    ${task.text} | ${task.category} | ${task.priority}
+    </span>
+
+    <div>
+      <button onclick="toggleTask(${index})">
+      Готово
+      </button>
+
+      <button onclick="deleteTask(${index})">
+      Удалить
+      </button>
+    </div>
+
+    `;
+
+    taskList.appendChild(li);
+
+  });
+
+}
+
+function addTask(){
+
+  const text = document.getElementById("taskInput").value;
+
+  const category =
+  document.getElementById("category").value;
+
+  const priority =
+  document.getElementById("priority").value;
+
+  if(text === ""){
+    return;
+  }
+
+  tasks.push({
+    text:text,
+    category:category,
+    priority:priority,
+    done:false
+  });
+
+  saveTasks();
+
+  renderTasks();
+
+  document.getElementById("taskInput").value = "";
+
+}
+
+function deleteTask(index){
+
+  tasks.splice(index,1);
+
+  saveTasks();
+
+  renderTasks();
+
+}
+
+function toggleTask(index){
+
+  tasks[index].done = !tasks[index].done;
+
+  saveTasks();
+
+  renderTasks();
+
+}
+
+renderTasks();
+
+
+
+// КАЛЬКУЛЯТОР ПРОДУКТИВНОСТИ
+
+function calculateProductivity(){
+
+  const work =
+  Number(document.getElementById("work").value);
+
+  const study =
+  Number(document.getElementById("study").value);
+
+  const fun =
+  Number(document.getElementById("fun").value);
+
+  const productive = work + study;
+
+  const total = productive + fun;
+
+  if(total === 0){
+    return;
+  }
+
+  const percent =
+  Math.round((productive / total) * 100);
+
+  document.getElementById("result").innerHTML =
+  "Продуктивность: " + percent + "%";
+
+  const progressBar =
+  document.getElementById("progressBar");
+
+  progressBar.style.width = percent + "%";
+
+  progressBar.innerHTML = percent + "%";
+
+}
+
+
+
+// POMODORO TIMER
+
+let time = 1500;
+
+let interval;
+
+function updateDisplay(){
+
+  const minutes = Math.floor(time / 60);
+
+  const seconds = time % 60;
+
+  document.getElementById("timer").innerHTML =
+  `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+
+}
+
+function startTimer(){
+
+  clearInterval(interval);
+
+  interval = setInterval(()=>{
+
+    time--;
+
+    updateDisplay();
+
+    if(time <= 0){
+
+      clearInterval(interval);
+
+      document.body.style.background = "#C8E6C9";
+
+      alert("Время вышло!");
+
+    }
+
+  },1000);
+
+}
+
+function pauseTimer(){
+
+  clearInterval(interval);
+
+}
+
+function resetTimer(){
+
+  clearInterval(interval);
+
+  time = 1500;
+
+  updateDisplay();
+
+}
+
+updateDisplay();
+
+
+
+// FETCH API
+
+fetch("https://api.quotable.io/random")
+
+.then(response => response.json())
+
+.then(data => {
+
+  document.getElementById("quotes").innerHTML = `
+
+  <div class="card">
+
+  <h3>Цитата дня</h3>
+
+  <p>${data.content}</p>
+
+  <small>${data.author}</small>
+
+  </div>
+
+  `;
+
+})
+
+.catch(error => {
+
+  console.log(error);
+
+});
+
+
+
+// КОНТАКТНАЯ ФОРМА
+
+const form =
+document.getElementById("contactForm");
+
+form.addEventListener("submit",function(event){
+
+  event.preventDefault();
+
+  const email =
+  document.getElementById("email").value;
+
+  const regex =
+  /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/;
+
+  if(!regex.test(email)){
+
+    document.getElementById("status").innerHTML =
+    "Введите правильный email";
+
+    return;
+
+  }
+
+  document.getElementById("status").innerHTML =
+  "Сообщение успешно отправлено!";
+
+  form.reset();
+
+});
+
+</script>
+
+</body>
+</html>
